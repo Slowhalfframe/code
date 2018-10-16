@@ -1,0 +1,19 @@
+/*
+* @Author: m
+* @Date:   2018-09-19 09:33:25
+* @Last Modified by:   m
+* @Last Modified time: 2018-09-19 10:32:08
+*/
+.box{
+	margin-top: 22px;
+	margin-bottom: 22px;
+}
+.bjq{
+	margin-top: 33px;
+} 
+.box .input-group .form-control{
+	height: 55px;
+	font-size: 30px;
+	text-align: center;
+	border: none;
+}

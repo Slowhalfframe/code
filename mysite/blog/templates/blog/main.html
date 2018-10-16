@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+{% block title %}{{u.username}} --- 个人中心{% endblock %}
+{% block user_add %}
+
+{% endblock %}
+
+{% block article_single %}
+{% endblock %}
+
+{% block baner %}
+{% endblock %}
+
+{% block main%}
+
+<div class="col-md-8">
+{% load static %}
+    <!-- 左上部开始 -->
+    <div class="row">
+        <div class="media main-top">
+            <div class="media-left">
+                <a href=""><img src="/static/uepload/{{u.header}}" class="img-circle"></a>
+            </div>
+            <div class="media-right">
+                <div class="media-body info">
+                    <h2 class="medai-heading"><strong>{{u.username}}</strong></h2>
+                    <ul class="list-inline">
+                        <li class="text-center">
+                            <a href="javacript:void(0);">
+                                2 <br>
+                                <span>关注 ></span>
+                            </a>
+                        </li>
+                        <li class="text-center">
+                            <a href="javacript:void(0);">
+                                2 <br>
+                                <span>粉丝 ></span>
+                            </a>
+                        </li>
+                        <li class="text-center">
+                            <a href="javacript:void(0);">
+                                {{a_num}} <br>
+                                <span>文章 ></span>
+                            </a>
+                        </li>
+                        <li class="text-center">
+                            123 <br>
+                            <span>字数</span>
+                        </li>
+                        <li class="text-center">
+                            99<br>
+                            <span>收获喜欢</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 左上部结束 -->
+    <!-- 左下部开始 -->
+    <div class="row">
+        <!-- 开始 -->
+        <div class="my-wz">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab"
+                                                          data-toggle="tab">文章</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">动态</a>
+                </li>
+                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab"
+                                           data-toggle="tab">最新评论</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">热门</a>
+                </li>
+            </ul>
+
+            <!-- Tab 内容开始 -->
+            <div class="tab-content">
+                <!-- 文章开始 -->
+                <div role="tabpanel" class="tab-pane active" id="home">
+
+
+
+                    <!-- +++++++++++++++++++++++++++++++++++ -->
+                {% for a in articles %}
+                    <div class="media wz">
+                        <div class="media-body">
+                            <a href="/blog/article_content/{{a.id}}"
+                               class="media-heading wz-title"><strong>{{ a.title }}</strong></a>
+                            <span class="label label-danger">文章</span>
+                            <p class="text-left text-muted">
+                               {{ a.note }}
+                            </p>
+                        </div>
+            {% if a.image %}
+                        <div class="media-right media-middle">
+                            <a href="#">
+                                <img class="media-object" src="/static/uepload/{{ a.image}}" alt="...">
+                            </a>
+                        </div>
+                        {% else %}
+                        {% endif %}
+                        <div class="media-bottom">
+                            <p class="text-muted text-left">
+                                <a onclick="return window.confirm('你确定删除这篇文章？')" href="/blog/del_article/{{a.id}}"><span id="author">删除</span></a>
+
+                                <a href="/blog/update_article/{{a.id}}" id="pl-link"><span id="pl"></span> 修改</a>
+                                <span id="time">{{ a.publish_time }}</span>
+                            </p>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <h3>还没有文章！</h3>
+                    <!-- =========================================== -->
+                    {% endfor %}
+
+                </div>
+                <!-- 文章结束 -->
+
+                <!-- 动态开始 -->
+                <div role="tabpanel" class="tab-pane" id="profile">
+
+                    <!-- +++++++++++++++++++++++++++++++++++ -->
+                {% for a in articles %}
+                    <div class="media wz">
+                        <div class="media-body">
+                            <a href="/blog/article_content/{{a.id}}"
+                               class="media-heading wz-title"><strong>{{ a.title }}</strong></a>
+                            <span class="label label-danger">文章</span>
+                            <p class="text-left text-muted">
+                               {{ a.note }}
+                            </p>
+                        </div>
+
+                        <div class="media-right media-middle">
+                            <a href="#">
+                                <img class="media-object" src="{% static './images/wz/5.jpeg' %}" alt="...">
+                            </a>
+                        </div>
+                        <div class="media-bottom">
+                            <p class="text-muted text-left">
+                                <a href="{% url 'blog:main' %}"><span id="author">{{ a.author.username }}</span></a>
+                                <span class="glyphicon glyphicon-eye-open" id="yd"></span> 9999+
+                                <a href="" id="pl-link"><span class="glyphicon glyphicon-comment" id="pl"></span> 99</a>
+                                <span id="time">{{ a.publish_time }}</span>
+                            </p>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <h3>还没有文章！</h3>
+                    <!-- =========================================== -->
+                    {% endfor %}
+
+                    <!-- =========================================== -->
+
+                </div>
+                <!-- 动态结束 -->
+
+                <!-- 最新评论开始 -->
+                <div role="tabpanel" class="tab-pane" id="messages">
+                    <!-- +++++++++++++++++++++++++++++++++++ -->
+
+                    <!-- +++++++++++++++++++++++++++++++++++ -->
+                {% for a in articles %}
+                    <div class="media wz">
+                        <div class="media-body">
+                            <a href="/blog/article_content/{{a.id}}"
+                               class="media-heading wz-title"><strong>{{ a.title }}</strong></a>
+                            <span class="label label-danger">文章</span>
+                            <p class="text-left text-muted">
+                               {{ a.note }}
+                            </p>
+                        </div>
+
+                        <div class="media-right media-middle">
+                            <a href="#">
+                                <img class="media-object" src="{% static './images/wz/5.jpeg' %}" alt="...">
+                            </a>
+                        </div>
+                        <div class="media-bottom">
+                            <p class="text-muted text-left">
+                                <a href="{% url 'blog:main' %}"><span id="author">{{ a.author.username }}</span></a>
+                                <span class="glyphicon glyphicon-eye-open" id="yd"></span> 9999+
+                                <a href="" id="pl-link"><span class="glyphicon glyphicon-comment" id="pl"></span> 99</a>
+                                <span id="time">{{ a.publish_time }}</span>
+                            </p>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <h3>还没有文章！</h3>
+                    <!-- =========================================== -->
+                    {% endfor %}
+                    <!-- =========================================== -->
+
+
+                </div>
+                <!-- 最新评论结束 -->
+
+                <!-- 热门开始 -->
+                <div role="tabpanel" class="tab-pane" id="settings">
+
+                    <!-- +++++++++++++++++++++++++++++++++++ -->
+                {% for a in articles %}
+                    <div class="media wz">
+                        <div class="media-body">
+                            <a href="/blog/article_content/{{a.id}}"
+                               class="media-heading wz-title"><strong>{{ a.title }}</strong></a>
+                            <span class="label label-danger">文章</span>
+                            <p class="text-left text-muted">
+                               {{ a.note }}
+                            </p>
+                        </div>
+
+                        <div class="media-right media-middle">
+                            <a href="#">
+                                <img class="media-object" src="{% static './images/wz/5.jpeg' %}" alt="...">
+                            </a>
+                        </div>
+                        <div class="media-bottom">
+                            <p class="text-muted text-left">
+                                <a href="{% url 'blog:main' %}"><span id="author">{{ a.author.username }}</span></a>
+                                <span class="glyphicon glyphicon-eye-open" id="yd"></span> 9999+
+                                <a href="" id="pl-link"><span class="glyphicon glyphicon-comment" id="pl"></span> 99</a>
+                                <span id="time">{{ a.publish_time }}</span>
+                            </p>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <h3>还没有文章！</h3>
+                    <!-- =========================================== -->
+                    {% endfor %}
+
+
+                </div>
+                <!-- 热门结束 -->
+            </div>
+            <!-- tab内容结束 -->
+
+        </div>
+        <!-- 结束 -->
+    </div>
+    <!-- 左下部结束 -->
+</div> <!-- 结束左侧 -->
+
+<!-- 开始右侧 -->
+<div class="col-md-4">
+
+    <!-- 个人介绍 -->
+    <div class="panel panel-default grjs">
+        <div class="panel-heading">
+            个人介绍
+        </div>
+        <div class="panel-body">
+            {{u.self_info}}
+        </div>
+    </div>
+    <!-- 个人介绍 -->
+
+    <!-- 我关注/喜欢 -->
+    <ul class="list-group like">
+        <li class="list-group-item"><span class="glyphicon glyphicon-th-large"></span> 我关注的专题/文集/连载</li>
+        <li class="list-group-item"><span class="glyphicon glyphicon-heart-empty"></span> 我喜欢的文章</li>
+    </ul>
+
+    <!-- 我创建 -->
+    <ul class="list-group cj">
+        <li class="list-group-item">我创建的专题</li>
+        <li class="list-group-item"><a href=""><span class="glyphicon glyphicon-plus"></span> 创建一个新专题</a></li>
+    </ul>
+
+    <!-- 文集-->
+    <ul class="list-group wj">
+        <li class="list-group-item">我的文集</li>
+        <li class="list-group-item"><a href=""><span class="glyphicon glyphicon-book"></span> 我的第一个文集</a></li>
+    </ul>
+
+</div>
+</div>
+
+{% endblock %}
+
+{% block music %}
+{% endblock %}

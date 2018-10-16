@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}所有文章列表{% endblock %}
+{% block baner %}
+{% endblock %}
+
+{% block main %}
+
+    <div class="col-md-10 col-md-offset-1">
+        <h3 align="center">所有用户</h3>
+        <br>
+        <table class="table table-condensed table-hover table-striped table-bordered table-responsive">
+            <tr>
+                <th>序号</th>
+                <th>标题</th>
+                <th>用户名</th>
+                <th colspan="3">操作</th>
+            </tr>
+            {% for a in articles %}
+            <tr>
+                <td>{{ forloop.counter}}</td>
+                <td><a href="/blog/article_content/{{a.id}}">{{a.title}}</a></td>
+                <td>{{a.author.username}}</td>
+                <td><a href="/blog/update_article/{{a.id}}">修改</a></td>
+                <td><a onclick="return window.confirm('你确定删除这个用户？')" href="/blog/del_article/{{a.id}}">删除</a></td>
+                {% if a.type == 2 %}
+                <td><a onclick="return window.confirm('你确定取消置顶这篇文章嘛？')" href="/blog/article_del_top/{{a.id}}">取消置顶</a></td>
+                {% elif a.type == 1 %}
+                <td><a onclick="return window.confirm('你确定置顶这篇文章嘛？')" href="/blog/article_top/{{a.id}}">置顶</a></td>
+                {% elif a.type == 0 %}
+                <td><a onclick="return window.confirm('你确定恢复这篇文章嘛？')" href="/blog/article_del_res/{{a.id}}">恢复文章</a></td>
+                {% endif %}
+            </tr>
+            {% empty %}
+                <h4>还没有文章</h4>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block music %}
+{% endblock %}

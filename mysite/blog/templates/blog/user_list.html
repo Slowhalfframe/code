@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}所有用户列表{% endblock %}
+{% block baner %}
+{% endblock %}
+
+{% block main %}
+
+    <div class="col-md-10 col-md-offset-1">
+        <h3 align="center">所有用户</h3>
+        <br>
+        <table class="table table-condensed table-hover table-striped table-bordered table-responsive">
+            <tr>
+                <th>序号</th>
+                <th>用户名</th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>邮箱</th>
+                <th colspan="2">操作</th>
+            </tr>
+            {% for u in users %}
+            <tr>
+                <td>{{ forloop.counter}}</td>
+                <td><a href="/blog/user_info/{{u.id}}">{{u.username}}</a></td>
+                <!--<td>{{u.password}}</td>-->
+                <td>{{u.name}}</td>
+                <td>{{u.age}}</td>
+                <td>{{u.email}}</td>
+                <td><a href="/blog/update_user/{{u.id}}">修改</a></td>
+                <td><a onclick="return window.confirm('你确定删除这个用户？')" href="/blog/del_user/{{u.id}}">删除</a></td>
+            </tr>
+            {% empty %}
+                <h4>还没有用户</h4>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+{% block music %}
+{% endblock %}

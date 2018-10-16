@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% block title %}用户注册{% endblock %}
+{% block baner %}
+
+{% endblock %}
+
+{% block main %}
+<div class="col-md-8 col-md-offset-2">
+
+    <!-- 注册弹出层 -->
+
+    <div class="reg">
+
+        <div class="info">{{msg}}</div>
+        <form class="form-horizontal" method="post" action="/blog/user_add/">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username" class="col-sm-2 control-label">账 号：</label>
+                <div class="col-sm-8" id="uname">
+                    <input type="text" autocomplete="off" class="form-control" id="username" placeholder="请输入注册昵称(用于登录账号)" name="username"
+                           required>
+                </div>
+                <div class="col-md-2" id="msg"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="col-sm-2 control-label">密 码：</label>
+                <div class="col-sm-8" id="pwd">
+                    <input type="password" class="form-control" id="password" placeholder="请输入注册密码" name="password"
+                           required>
+                </div>
+                <div class="col-md-2" id="pmsg"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password2" class="col-sm-2 control-label">确认密码：</label>
+                <div class="col-sm-8" id="pwd2">
+                    <input type="password" class="form-control" id="password2" placeholder="请确认注册密码" name="password2"
+                           required>
+                </div>
+                <div class="col-md-2" id="pmsg2"></div>
+            </div>
+
+            <!--<div class="form-group">-->
+                <!--<label for="name" class="col-sm-2 control-label">姓名：</label>-->
+                <!--<div class="col-sm-8">-->
+                    <!--<input type="text" autocomplete="off" class="form-control" id="name" placeholder="请输入真实姓名" name="name" required>-->
+                <!--</div>-->
+                <!--<div class="col-md-2"></div>-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+                <!--<label for="age" class="col-sm-2 control-label">年龄：</label>-->
+                <!--<div class="col-sm-8" id="agebox">-->
+                    <!--<input type="number" autocomplete="off" class="form-control" id="age" placeholder="请输入年龄(只能为数字)" name="age" required>-->
+                <!--</div>-->
+                <!--<div class="col-md-2" id="agemsg"></div>-->
+            <!--</div>-->
+
+            <div class="form-group">
+                <label for="email" class="col-md-2 control-label">邮箱：</label>
+                <div class="col-md-8">
+                    <input type="email" autocomplete="off" class="form-control" id="email" placeholder="请输入联系邮箱" name="email" required>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="yzm" class="col-md-2 control-label">验证码：</label>
+                <div class="col-md-4">
+                    <input type="text" autocomplete="off" id="yzm" class="form-control"  placeholder="请输入验证码" name="code" required>
+                </div>
+                <div class="col-md-4">
+                    <a onclick="changeCode()" href="javascript:void(0)"><img id="code" src="{% url 'blog:code' %}" alt="验证码" title="点击刷新验证码"></a>
+                </div>
+                <!--<div class="col-md-2">-->
+                    <!--<a onclick="changeCode()" href="javascript:void(0)">点击刷新验证码</a>-->
+                <!--</div>-->
+                <div class="col-md-2"></div>
+            </div>
+
+            <input type="submit" value="注册" id="sub_btn" class="btn btn-success col-md-10 col-md-offset-1 "disabled>
+        </form>
+    </div>
+
+</div>
+</div>
+<script>
+        function changeCode() {
+//            document.getElementById("code").src = "/blog/code?id="+ new Date().getTime()
+            document.getElementById("code").src = "/blog/code?id="+ Math.random()
+        }
+
+        // 验证用户名
+        $(function () {
+            $("#username").on("blur",function () {
+                console.log("abc")
+                uname = $("#username").val()
+                console.log(uname)
+                $.ajax({
+                    url:"/blog/"+uname+"/checkusername/",
+                    method:"POST",
+                    dataType:"json",
+                    data:{"csrfmiddlewaretoken":"{{ csrf_token }}"},
+                    success:function (data) {
+                        console.log(data)
+                        if (data.success){
+                            // $("#uname").addClass("has-success")
+                            $("#msg").html("<span style='color:green;'>"+data.msg+"</span>")
+                        }else{
+                            // $("#uname").addClass("has-error")
+                            $("#sub_btn").attr("disabled",true)
+                            $("#msg").html("<span style='color:red;font-size: 12px;line-height: 5px;'>"+ data.msg + "</span>")
+                        }
+                    }
+                })
+            })
+
+            // 验证密码
+            $(function () {
+            $("#password").on("blur",function () {
+                console.log("abc")
+                password = $("#password").val()
+                console.log(password.length)
+                if (password.length < 6){
+                    // $("#pwb").addClass("has-error")
+                    $("#sub_btn").attr("disabled",true)
+                    $("#pmsg").html("<span style='color:red;'>"+"密码长度不足6位"+"</span>")
+                }else {
+                    // $("#pwb").addClass("has-success")
+
+                    $("#pmsg").html("<span style='color:green;'>"+"密码合法！！请继续输入" + "</span>")
+                }
+                })
+            })
+
+            // 第二次密码验证
+            $(function () {
+            $("#password2").on("blur",function () {
+                console.log("abc")
+                password2 = $("#password2").val()
+                console.log(password2.length)
+                if (password2 != password){
+                    // $("#pwb2").addClass("has-error")
+                    $("#sub_btn").attr("disabled",true)
+                    $("#pmsg2").html("<span style='color:red;'>"+"两次密码不一致"+"</span>")
+                }else {
+                    // $("#pwb2").addClass("has-success")
+                    $("#sub_btn").removeAttr("disabled")
+                    $("#pmsg2").html("<span style='color:green;'>"+"密码合法！！请继续输入" + "</span>")
+                }
+                })
+            })
+
+            //年龄验证
+            $(function () {
+                $("#age").on("blur",function () {
+                    console.log("输入年龄了")
+                    age = $("#age").val()
+                    console.log(age)
+                    if (age >= 1){
+                        // $("#agebox").addClass("has-success")
+                        $("#sub_btn").removeAttr("disabled")
+                        $("#agemsg").html("<span style='color:green;'>"+"年龄合法！！请继续输入" + "</span>")
+                    }else{
+                        // $("#agebox").addClass("has-error")
+                        $("#sub_btn").attr("disabled",true)
+                        $("#agemsg").html("<span style='color:red;'>"+"请认真填写年龄"+"</span>")
+                    }
+                })
+            })
+
+            //验证码验证
+            // $(function () {
+            //     $("#yzm").on("blur",function () {
+            //         console.log("输入过验证码了")
+            //         yzm = $("#yzm").val()
+            //         console.log(yzm)
+            //        if (yzm.length > 0):
+            //         return
+            //     })
+            // })
+
+        })
+    </script>
+{% endblock %}
+
+{% block music %}
+{% endblock %}
+

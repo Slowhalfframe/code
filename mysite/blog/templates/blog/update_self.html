@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% block baner %}
+{% endblock %}
+
+{% block main %}
+
+
+<div class="col-md-10 col-md-offset-1">
+
+    <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
+    <ul id="myTabs" class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="{{class}}"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">基本资料</a></li>
+      <li role="presentation" class="{{class1}}"><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile">修改头像</a></li>
+      <li role="presentation" class="{{class2}}"><a href="#dropdown1" role="tab" id="dropdown1-tab" data-toggle="tab" aria-controls="profile">修改密码</a></li>
+    </ul>
+
+    <div id="myTabContent" class="tab-content">
+
+        <div role="tabpanel" class="{{cls}}" id="home" aria-labelledby="home-tab">
+            <div class="col-md-10 col-md-offset-1">
+                <br>
+                <form class="form-horizontal" action="/blog/update_user/{{self_user.id}}/" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">昵称：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputEmail3" value="{{self_user.username}}"
+                                   name="username">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail31" class="col-sm-2 control-label">姓名：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputEmail31" value="{{self_user.name}}"
+                                   disabled name="name">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="inputEmail32" class="col-sm-2 control-label">年龄：</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="inputEmail32" value="{{self_user.age}}"
+                                   name="age">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="inputEmail33" class="col-sm-2 control-label">邮箱：</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="inputEmail33" value="{{self_user.email}}"
+                                   name="email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail35" class="col-sm-2 control-label">个性签名：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputEmail35" value="{{self_user.self_info}}"
+                                   name="self_info">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">修改</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+      <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
+        <div class="col-md-8 col-md-offset-2">
+            <form action="/blog/update_user_header/{{self_user.id}}/" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <div id="addCommodityIndex" style="margin: 5% auto;width: 99px;height: 99px;">
+                    <!--input-group start-->
+                    <div class="input-group row">
+                        <div class="big-photo">
+                            <div id="preview" class="text-center">
+                                <img id="imghead" class="img-circle" border="0" src="/static/uepload/{{self_user.header}}" width="99" height="99"
+                                     onclick="$('#previewImg').click();" title="点击更换头像">
+                            </div>
+                            <input type="file" onchange="previewImage(this)" style="display: none;" id="previewImg" name="header">
+                            <!--<input id="uploaderInput" class="uploader__input" style="display: none;" type="file" accept="" multiple="">-->
+                        </div>
+                    </div>
+                    <!--input-group end-->
+
+                </div>
+                <br>
+                <div class="text-center">
+                    <button class="btn btn-success" type="submit">提交</button>
+                </div>
+            </form>
+        </div>
+      </div>
+
+      <div role="tabpanel" class="{{cls2}}" id="dropdown1" aria-labelledby="dropdown1-tab">
+          <div class="col-md-8 col-md-offset-2">
+              <br>
+              <form class="form-horizontal" method="post" action="/blog/update_self/">
+                  {% csrf_token %}
+                  <span style="color: #e96ba8;">{{msg}}</span>
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">当前密码</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="inputEmail3" required type="password" name="old_password" placeholder="请输入旧密码">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail31" class="col-sm-2 control-label">新密码</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="inputEmail31" required type="password" name="new_password1" placeholder="请输入新密码">
+    </div>
+  </div><div class="form-group">
+    <label for="inputEmail32" class="col-sm-2 control-label">确认密码</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="inputEmail32" required type="password" name="new_password2" placeholder="请确认新密码">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">提交</button>
+    </div>
+  </div>
+</form>
+          </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+<script>
+      //图片上传预览    IE是用了滤镜。
+        function previewImage(file)
+        {
+          var MAXWIDTH  = 150;
+          var MAXHEIGHT = 150;
+          var div = document.getElementById('preview');
+          if (file.files && file.files[0])
+          {
+              div.innerHTML ='<img id=imghead onclick=$("#previewImg").click()>';
+              var img = document.getElementById('imghead');
+              img.onload = function(){
+                var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                img.width  =  rect.width;
+                img.height =  rect.height;
+//                 img.style.marginLeft = rect.left+'px';
+                img.style.marginTop = rect.top+'px';
+              }
+              var reader = new FileReader();
+              reader.onload = function(evt){img.src = evt.target.result;}
+              reader.readAsDataURL(file.files[0]);
+          }
+          else //兼容IE
+          {
+            var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+            file.select();
+            var src = document.selection.createRange().text;
+            div.innerHTML = '<img id=imghead>';
+            var img = document.getElementById('imghead');
+            img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+            status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+            div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
+          }
+        }
+        function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+            var param = {top:0, left:0, width:width, height:height};
+            if( width>maxWidth || height>maxHeight ){
+                rateWidth = width / maxWidth;
+                rateHeight = height / maxHeight;
+
+                if( rateWidth > rateHeight ){
+                    param.width =  maxWidth;
+                    param.height = Math.round(height / rateWidth);
+                }else{
+                    param.width = Math.round(width / rateHeight);
+                    param.height = maxHeight;
+                }
+            }
+            param.left = Math.round((maxWidth - param.width) / 2);
+            param.top = Math.round((maxHeight - param.height) / 2);
+            return param;
+        }
+    </script>
+{% endblock %}
+
+{% block music %}
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}{{article.title}} --- 修改文章{% endblock %}
+{% block baner %}
+{% endblock %}
+
+{% block main %}
+
+<form action="/blog/update_article/{{article.id}}/" method="post">
+    {% csrf_token %}
+    <div class="col-md-12">
+        <div class="row  box col-md-8 input-group col-md-8 col-md-offset-2">
+            <input type="text" class="form-control" value="{{article.title}}" name="title">
+        </div>
+
+        <br>
+
+        <div class="row col-md-10 col-md-offset-1">
+             <script id="id_content" name="content"  style="display: inline-block;" type="text/plain">{{article.content | safe}}</script>
+            <link rel="stylesheet" href="/static/ueditor/themes/default/css/ueditor.css">
+            <script type="text/javascript" src="/static/ueditor/ueditor.config.js"></script>
+            <script type="text/javascript" src="/static/ueditor/ueditor.all.min.js"></script>
+            <script type="text/javascript" src="/static/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+
+            <script type="text/javascript">
+                var id_content = UE.getEditor('id_content',{
+                    'initialFrameWidth': 900,
+                    'initialFrameHeight': 500,
+                    'serverUrl': '/ueditor/controller/?imagePathFormat=&filePathFormat=',
+
+
+                });
+
+                id_content.ready(function(){
+
+                });
+
+            </script>
+        </div>
+        <br>
+
+        <div class="row col-md-10 input-group col-md-offset-1">
+            <input name="note" value="{{article.note}}" style="width: 100%;height:50px;"></input>
+        </div>
+        <br>
+        <div class="checkbox">
+            <label>
+              <input type="radio" name="feilei" value="1" required="">搬运
+            </label>
+            <label>
+                <input type="radio" name="feilei" value="2">原创
+            </label>
+            <label>
+                <input type="radio" name="feilei" value="3">其它
+            </label>
+        </div>
+
+        <div class="row">
+            <input type="submit" value="更新" class="btn btn-info">
+            <input type="reset" value="清空" class="btn btn-default">
+        </div>
+
+    </div>
+</form>
+</div>
+
+
+{% endblock %}
+
+{% block music %}
+{% endblock %}

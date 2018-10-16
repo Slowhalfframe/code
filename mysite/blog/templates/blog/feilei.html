@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block baner %}
+{% endblock %}
+
+{% block con_left %}
+
+{% for a in articles %}
+<div class="media wz">
+
+  <div class="media-body">
+    <a href="/blog/article_content/{{a.id}}" class="media-heading wz-title"><strong>{{a.title | truncatechars:30 }}</strong></a>
+      {% if a.feilei == 3 %}
+        <span class="label label-success">其它</span>
+      {% elif a.feilei == 2 %}
+        <span class="label label-success">原创</span>
+      {% elif a.feilei == 1 %}
+        <span class="label label-success">搬运</span>
+
+      {% endif %}
+    <p class="text-left text-muted" >
+        {{a.note | truncatechars:80 }}
+    </p>
+  </div>
+    {% if a.image %}
+    <div class="media-right media-middle">
+        {% load static %}
+    <a href="/blog/article_content/{{a.id}}">
+      <!--<img class="media-object" src="{% static 'images/wz/1.jpg' %}" alt="...">-->
+      <img class="media-object" src="/static/uepload/{{a.image}}" alt="...">
+    </a>
+  </div>
+    {% else %}
+    {% endif %}
+    <div class="media-bottom">
+        <p class="text-muted text-left">
+        <a href="/blog/user/{{a.author_id}}"><span  id="author">{{a.author.username}}</span></a>
+        <span class="glyphicon glyphicon-eye-open" id="yd"></span> {{a.count}}
+        <a href="" id="pl-link"><span class="glyphicon glyphicon-comment" id="pl"></span> 99</a>
+        <span  id="time">{{a.publish_time}}</span>
+        </p>
+    </div>
+</div>
+{% empty %}
+<h2>还没有文章呢，快去创作吧！</h2>
+
+    {% endfor %}
+{% endblock %}
+
+<!--========================================-->
+
+{% block hot_articles %}
+<ul class="list-group hot-wz">
+    <li class="list-group-item" id="hot-wz-title">
+        <h4><span class="glyphicon glyphicon-folder-open"></span> &nbsp;热门文章</h4>
+    </li>
+    {% for h_a in hot_articles %}
+    <li class="list-group-item"><a href="/blog/article_content/{{h_a.id}}">{{h_a.title | truncatechars:28 }}</a></li>
+
+    {% empty %}
+    <li class="list-group-item"><a href="">还没有热门文章！</a></li>
+    {% endfor %}
+
+</ul>
+{% endblock %}
+{% block hot_user %}
+{% endblock %}
+
+{% block music %}
+{% endblock %}

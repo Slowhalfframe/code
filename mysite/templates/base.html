@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-en">
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %}博客首页{% endblock %}</title>
+	{% load static  %}
+	<link rel="stylesheet" href="{% static 'css/app/player.css' %}">
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    {% block index_css %}
+	<link rel="stylesheet" href="{% static 'css/app/index.css' %}">
+    {% endblock %}
+    {% block user_add %}
+    <link rel="stylesheet" href="{% static 'blog/css/user_add.css' %}">
+    {% endblock %}
+    {% block article_single %}
+    <link rel="stylesheet" href="{% static 'css/app/article_single.css' %}">
+    {% endblock %}
+    {% block main_css %}
+    <link rel="stylesheet" href="{% static 'css/app/main.css' %}">
+    {% endblock %}
+    <!--<link rel="stylesheet" href="{% static 'js/lib/editor.md-master/css/editormd.min.css' %}">-->
+	<script src="{% static 'js/lib/jquery2.2.4/jquery-2.2.4.js' %}"></script>
+    <script src="{% static 'js/lib/bootstrap.js' %}"></script>
+    <script src="{% static 'js/app/index.js' %}"></script>
+    <script src="{% static 'js/app/jquery.goup.min.js' %}"></script>
+    <script src="{% static './js/app/jquery.nicescroll.min.js' %}"></script>
+    <script src="{% static './js/app/jquery.marquee.min.js' %}"></script>
+</head>
+<body>
+
+	<!-- 导航条开始 -->
+	<nav class="navbar navbar-default navbar-fixed-top">
+	  <div class="container">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <!-- logo -->
+	      <a class="navbar-brand" href="{% url 'blog:index' %}">okokstudy</a>
+	    </div>
+		<!-- 左边盒子 -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	        <li class="active"><a href="{% url 'blog:index' %}"><span class="glyphicon glyphicon-home"></span> 首页 <span class="sr-only">(current)</span></a></li>
+	        <li class="dropdown">
+	          <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">文章 <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="/blog/banyun/"><span class="glyphicon glyphicon-pencil"></span> &nbsp;搬运专栏 </a></li>
+                <li><a href="/blog/yuanchuang/"><span class="glyphicon glyphicon-pencil"></span> &nbsp;原创专栏</a></li>
+                <li><a href="/blog/other/"><span class="glyphicon glyphicon-pencil"></span> &nbsp;其它 &nbsp; </a></li>
+	          </ul>
+	        </li>
+
+
+	      </ul>
+            {% if request.session.LoginUser.type == 1 %}
+				<!--管理-->
+			<ul class="nav navbar-nav">
+	        <li class="dropdown">
+	          <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">管理 <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="/blog/user_list/"><span class="glyphicon glyphicon-pencil"></span> &nbsp;全部用户</a></li>
+
+                  <li><a href="/blog/article_list/"><span class="glyphicon glyphicon-pencil"></span> &nbsp;全部文章</a></li>
+                  <li><a href="/blog/del_article_list/"><span class="glyphicon glyphicon-pencil"></span> &nbsp;回收站文章</a></li>
+
+	          </ul>
+	        </li>
+	      </ul>
+
+			<!--管理结束-->
+            {% else %}
+            {% endif %}
+	      <!-- 右边导航 -->
+	      <ul class="nav navbar-nav navbar-right">
+              <li>
+	      	<form class="navbar-form navbar-left visible-md visible-lg" action="/blog/search/">
+		        <div class="input-group">
+				  <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-search"></i></span>
+				  <input type="text" class="form-control" placeholder="输入关键字搜索..." aria-describedby="basic-addon1" name="search">
+				</div>
+		        <button type="submit" class="btn btn-default" style="display: none;">搜索</button>
+		     </form></li>
+
+              {% if request.session.LoginUser %}
+              <li><a href="{% url 'blog:add_article' %}"><span class="glyphicon glyphicon-pencil"></span> 创作</a></li>
+			  <ul class="nav navbar-nav" style="padding-left: 0px;">
+	        <li class="dropdown">
+	          <a href="javascript:void(0);" style="padding: 6px;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="/static/uepload/{{request.session.LoginUser.header}}" alt="{{request.session.LoginUser.username}}" class="img-circle" width="38" height="38" title="{{request.session.LoginUser.username}}"><span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+                  <li><a href="{% url 'blog:main' %}"><span class="glyphicon glyphicon-flag"></span> &nbsp;我的主页</a></li>
+	          	<li role="separator" class="divider"></li>
+	            <!-- <li><a href="javascript:void(0);"></a></li> -->
+	            <li><a href="javascript:void(0);"><span class="glyphicon glyphicon-heart"></span> &nbsp;我的喜欢</a></li>
+	            <li><a href="javascript:void(0);"><span class="glyphicon glyphicon-star"></span> &nbsp;我的收藏</a></li>
+	            <li role="separator" class="divider"></li>
+	            <!-- 用户登录后，点击头像出现账户设置  -->
+				<li><a href="{% url 'blog:update_self' %}"><span class="glyphicon glyphicon-thumbs-up"></span> &nbsp;个人设置</a></li>
+	            <li><a href="/blog/user_logout/"><span class="glyphicon glyphicon-off"></span> 退出登录</a></li>
+
+	          </ul>
+	        </li>
+	      </ul>
+
+
+              {% else %}
+
+		     <!-- 用户登录成功后，登录和注册隐藏，显示用户头像和昵称 ，点击显示：我的主页，账户设置，退出登录-->
+	      	<!--<li style="margin-right: 5px;"><button type="button" class="btn btn-default navbar-btn"><a href="{% url 'blog:user_login' %}" id="login" style="display: inline-block;width: 54px;height: 17px;">登录</a></button></li>-->
+	      	<li style="margin-right: 5px;"><button type="button" class="btn btn-default navbar-btn" onclick="window.location = '/blog/user_login/';" id="reg">登录</button></li>
+	        <!--<button type="button" class="btn btn-danger navbar-btn" data-toggle="modal" data-target="#myreg"><a href="javascript:void(0);" id="reg">注册</a></button>-->
+              <!--<li><button type="button" class="btn btn-danger navbar-btn"><a href="{% url 'blog:user_add' %}" id="reg" style="display: inline-block;width: 54px;height: 17px;">注册</a></button></li>-->
+              <li><button type="button" class="btn btn-danger navbar-btn" onclick="window.location = '/blog/user_add/';" id="reg">注册</button></li>
+              {% endif %}
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+	<!-- 导航结束 -->
+
+	<!-- baner图 -->
+    {% block baner %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 visible-md visible-lg banner">
+				<a href="{% url 'blog:add_article' %}"><img src="{% static 'images/baner.jpg' %}"></a>
+			</div>
+		</div>
+	</div>
+    {% endblock %}
+
+
+	<!-- 开始写主题部分 -->
+    <div class="container main" style="min-height: 500px;">
+        <div class="row">
+
+            {% block main %}
+
+
+            <div class="col-md-8">
+                <!-- <div class="row"> -->
+                {% block con_left %}
+                <div class="media wz">
+                    <div class="media-body">
+                        <a href="javascript:void(0);" class="media-heading wz-title"><strong>她吻住我的时候，我笑场了</strong></a>
+                        <span class="label label-danger">文章</span>
+                        <p class="text-left text-muted">
+                            成年后，跟心仪女孩相处，差不多确定她对我有好感之后，我就会停止行动，内心默念：“好了，妖女，来蹂躏我吧。” ...
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- =========================================== -->
+
+                {% endblock %}
+
+            </div>
+
+
+
+            {% block con_right %}
+		<div class="col-md-4">
+			{% block hot_articles %}
+			<!-- 热门文章 -->
+			<ul class="list-group hot-wz">
+			  <li class="list-group-item" id="hot-wz-title">
+			    <h4><span class="glyphicon glyphicon-folder-open"></span> &nbsp;热门文章</h4>
+			  </li>
+			  <li class="list-group-item"><a href="">她吻住我的时候，我笑场了</a></li>
+			</ul>
+{% endblock %}
+		<!-- <div class="col-md-4"> -->
+            {% block hot_user %}
+			<ul class="list-group hot-yh">
+			  <li class="list-group-item" id="hot-yh-title">
+			    <h4><i class="glyphicon glyphicon-education"></i> &nbsp;热门用户</h4>
+			  </li>
+
+			  <li class="list-group-item">
+			  	<a href="">
+			  		<img src="{% static 'images/3.jpg'%}">
+			  		<span>慢半帧</span>
+			  	</a>
+			  </li>
+
+			</ul>
+		<!-- </div>  热门作者 -->
+            {% endblock %}
+
+		</div><!-- 右侧盒子结束 -->
+            {% endblock %}
+
+
+		</div><!-- row -->
+        {% endblock %}
+	</div><!-- main -->
+
+<!-- footer -->
+	<div class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8">
+				<ul class="list-inline link">
+					<li>友情链接：</li>
+					<li><a href="javascript:void(0)">慢半帧VIP影院</a></li>
+					<li><a href="javascript:void(0)">慢半帧博客</a></li>
+					<li><a href="javascript:void(0)">慢半帧导航</a></li>
+					<li><a href="javascript:void(0)">真实故事计划</a></li>
+					<li><a href="javascript:void(0)">简书</a></li>
+				</ul>
+				<ul class="list-inline about">
+					<li><a href="javascript:void(0)">关于我们</a></li>
+					<li><a href="javascript:void(0)">联系我们</a></li>
+					<li><a href="javascript:void(0)">用户协议</a></li>
+				</ul>
+				<p class="CP">CopyRight &copy; 2018 | okokstudy . 豫ICP备2018号 |   网站主题借鉴于真实故事计划</p>
+				</div>
+				<div class="col-md-4 gzh visible-md visible-lg">
+					<img src="{% static 'images/gzh.jpg'%}">
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- footer -->
+    {% block music %}
+
+<div id="QPlayer">
+<div id="pContent">
+	<div id="player">
+		<span class="cover"></span>
+		<div class="ctrl">
+			<div class="musicTag marquee">
+				<strong>Title</strong>
+				 <span> - </span>
+				<span class="artist">Artist</span>
+			</div>
+			<div class="progress">
+				<div class="timer left">0:00</div>
+				<div class="contr">
+					<div class="rewind icon"></div>
+					<div class="playback icon"></div>
+					<div class="fastforward icon"></div>
+				</div>
+				<div class="right">
+					<div class="liebiao icon"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ssBtn">
+	        <div class="adf"></div>
+    </div>
+</div>
+
+<ol id="playlist"></ol>
+</div>
+
+
+<!-- =========================================== -->
+<!-- ----------------------------- -->
+
+    <!--<script src="{% static 'js/lib/editor.md-master/editormd.min.js' %}"></script>-->
+<script>
+	var	playlist = [
+{title:"这个世界还会好吗",artist:"李志",mp3:"http://www.ytmp3.cn/down/33364.mp3",cover:"https://p3.music.126.net/RN-nvLgMuLujEvbMRUFQvA==/3420580718570196.jpg?param=300y300",},
+{title:" 体面",artist:"于文文",mp3:"http://www.ytmp3.cn/down/49491.mp3",cover:"http://imge.kugou.com/stdmusic/135/20171221/20171221090821129644.jpg?param=300y300",}
+];
+ var isRotate = true;
+ var autoplay = false;
+</script>
+<script src="{% static './js/app/player.js' %}"></script>
+<script>
+
+function bgChange(){
+	var lis= $('.lib');
+	for(var i=0; i<lis.length; i+=2)
+	lis[i].style.background = 'rgba(246, 246, 246, 0.5)';
+}
+window.onload = bgChange;
+</script>
+{% endblock %}
+</body>
+</html>

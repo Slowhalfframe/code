@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}文章添加{% endblock %}
+{% block baner %}
+{% endblock %}
+
+{% block main %}
+
+
+<form action="/blog/add_article/" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="col-md-12">
+        <div class="row  box col-md-8 input-group col-md-8 col-md-offset-2">
+            <input type="text" class="form-control" placeholder="请输入标题" autocomplete="off" name="title" required>
+        </div>
+
+        <br>
+
+        <div class="row col-md-10 col-md-offset-1">
+            <script id="id_content" name="content"  style="display: inline-block;" type="text/plain"></script>
+            <link rel="stylesheet" href="/static/ueditor/themes/default/css/ueditor.css">
+            <script type="text/javascript" src="/static/ueditor/ueditor.config.js"></script>
+            <script type="text/javascript" src="/static/ueditor/ueditor.all.min.js"></script>
+            <script type="text/javascript" src="/static/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+
+            <script type="text/javascript">
+                var id_content = UE.getEditor('id_content',{
+                    'initialFrameWidth': 900,
+                    'initialFrameHeight': 500,
+                    'serverUrl': '/ueditor/controller/?imagePathFormat=&filePathFormat='
+                });
+                id_content.ready(function(){
+
+                });
+            </script>
+        </div>
+        <br>
+
+
+
+        <div class="row col-md-10 input-group col-md-offset-1">
+            <input type="text" name="note" placeholder="请输入摘要信息(不填写默认截取前80字符)" autocomplete="off" style="width: 100%;height:50px;"></input>
+        </div>
+        <br>
+        <div class="row col-md-4 input-group col-md-offset-4" style="border: 1px solid #345;">
+            <input type="file" name="image" title="快来上传封面图片吧！！！上传之后是不能修改的哦~，" style="display:block;width: 100%;height:30px;"></input>
+        </div>
+
+        <div class="checkbox">
+            <b>文章类型：</b>
+            <label>
+              <input type="radio" name="feilei" value="1" required="">搬运
+            </label>
+            <label>
+                <input type="radio" name="feilei" value="2">原创
+            </label>
+            <label>
+                <input type="radio" name="feilei" value="3">其它
+            </label>
+        </div>
+
+        <div class="row">
+            <input type="submit" value="发表" class="btn btn-info">
+            <input type="reset" value="清空" class="btn btn-default">
+        </div>
+
+    </div>
+</form>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block music %}
+{% endblock %}

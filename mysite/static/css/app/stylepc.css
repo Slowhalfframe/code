@@ -1,0 +1,163 @@
+.box ul li{
+	list-style: none;
+}
+
+.menu{
+		width: 80%;
+		margin-left: 33px;
+		float: left;
+		border-right: 1px solid #aaa;
+	}
+/*position 菜单背景图标*/
+	.positionIicon{
+		display: inline block;
+		width: 32px;
+		height: 32px;
+		margin: 0px 4px;
+		float: left;
+		margin-right: 10px;
+	}
+/*menu图标*/
+	.q-menu-img{
+		background: url("../img/iconfont-kuaisulu.png");
+	}
+	
+	.q-menu-doit{
+		background: url("../img/iconfont-0bangzhushouce.png");
+	}
+
+	.q-menu-three{
+		background: url("../img/iconfont-wenti.png");
+	}
+
+
+	.menu h3{
+		font-size: 20px;
+		cursor: pointer;
+	}
+     .menu ul{
+        display: none;
+    }
+	 .menu ul li{
+		height: 28px;
+		line-height: 28px;
+	}
+
+	 .menu ul li a:hover{
+		background: #9FB6CD;
+		border-radius: 14px;
+		-webkit-border-radius: 14px;
+		-moz-border-radius: 14px;
+		-moz-border-radius:14px;
+		color:#fff;
+	
+	}
+
+	.menu a{
+		text-decoration: none;
+		color: #000;
+		font-size: 14px;
+		display: block;
+		width: 100px;
+		height: 26px;
+		padding-left: 10px;
+	}
+	 .menu .selected{
+		background: #ccc;
+		border-radius: 14px;
+	}
+
+
+
+	.content{
+		margin-top: 15px;
+		width: 860px;
+		margin-left: 20px;
+	}
+
+	.content .get-menu{
+		margin-left: -10px;
+	}
+
+	.content .get-menu a{
+		display: inline-block;
+		font-size: 15px;
+	    height: 40px;
+	}
+
+	.content .get-menu a:last-child{
+		margin-left: -8px;
+		color: #7D9EC0;
+	}
+
+	.content .get-menu span{
+		display: inline-block;
+	    height: 40px;
+	    margin-left: -110px;
+	}
+
+	.content .menu1 .tab {
+		display: none;
+	}
+
+	.content .menu1 .active{
+		display: block;
+	}
+
+	.content .menu1 .tab p{
+		font-size: 14px;
+		line-height: 20px;
+		color: rgba(0,0,0,1);
+        word-break:break-all;
+	}
+
+	.content .menu1 .tab .tt{
+		font-size: 14px;
+		font-weight: bold;
+
+	}
+/*第二个菜单下的文档内容*/
+	.content .menu2 .tab {
+		display: none;
+	}
+
+	.content .menu2 .active{
+		display: block;
+	}
+
+	.content .menu2 .tab p{
+		font-size: 14px;
+		line-height: 20px;
+		color: rgba(0,0,0,0.8);
+        word-break:break-all;
+	}
+
+	.content .menu2 .tab .tt{
+		font-size: 14px;
+		font-weight: bold;
+
+	}
+.one{
+	margin-bottom: 158px;
+}
+.two{
+	/*border: 1px solid #333;*/
+	margin-bottom: 92px;
+}
+.three{
+	margin-bottom: 264px;
+}
+.one img,
+.two img{
+	width: 111px;
+	height: 111px;
+	border: 1px solid #eee;
+	margin: 0 auto;
+}
+#info{
+	width: 100%;
+	height: 66px;
+}
+.two .btn{
+
+}

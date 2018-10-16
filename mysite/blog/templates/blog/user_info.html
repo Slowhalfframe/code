@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}{{user.username}} 的详细信息{% endblock %}
+{% block baner %}
+{% endblock %}
+
+{% block main %}
+
+    <div class="col-md-8 col-md-offset-2" style="margin-top:6%;margin-bottom: 12%;">
+        <table class="table table-striped table-hover table-responsive table-bordered">
+
+            <tr>
+                <th colspan="2"><h3>{{user.name}} --- 详细信息</h3></th>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><img src="/static/uepload/{{user.header}}" alt="{{user.username}}" width="110" height="110" class="img-circle"></td>
+            </tr>
+            <tr>
+                <th>昵称：</th>
+                <td style="color:#2196F3">{{user.username}}</td>
+            </tr>
+            <tr>
+                <th>姓名：</th>
+                <td style="color:#2196F3">{{user.name}}</td>
+            </tr>
+            <tr>
+                <th>年龄：</th>
+                <td style="color:#2196F3">{{user.age}}</td>
+            </tr>
+            <tr>
+                <th>邮箱：</th>
+                <td style="color:#2196F3">{{user.email}}</td>
+            </tr>
+            <tr>
+                <th>个性签名：</th>
+                <td style="color:#2196F3">{{user.self_info}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block music %}
+{% endblock %}

@@ -1,0 +1,68 @@
+/*
+* @Author: m
+* @Date:   2018-09-19 10:59:48
+* @Last Modified by:   m
+* @Last Modified time: 2018-09-19 17:02:10
+*/
+.title p{
+	margin-left: 5px;
+	margin-top: 15px;
+}
+.content p {
+	font-size: 16px;
+	color: #4f4f4f;
+	font-weight: 500;
+	line-height: 26px;
+	text-align: justify;
+}
+.bq{
+	border-radius: 5px;
+}
+.bq a{
+	color: #333;
+	background-color: #ccc;
+	font-size: 13px;
+	padding: 3px;
+	font-weight: 600;
+}
+.bq a:hover{
+	text-decoration: none;
+	color: #eee;
+	background-color: #333;
+}
+.like:hover{
+	color: #f66;
+}
+.sc{
+	display: inline-block;
+	margin: 0 10px;
+}
+.tx{
+	display: block;
+	text-align: center;
+	margin: auto;
+	width: 121px;
+}
+.user{
+	font-size: 16px;
+	font-weight: 500;
+}
+.gz{
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+	padding: 10px ;
+}
+.gz a{
+	background-color: #9a474a;
+	color: #fff;
+	padding: 6px 88px;
+	border-radius: 5px;
+}
+.gz a:hover{
+	background-color: #fff;
+	background-color: #f46063;
+	text-decoration: none;
+}
+.panel-default>.panel-heading{
+	background-color: #fdfdfd;
+}

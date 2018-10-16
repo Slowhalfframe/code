@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}{{u.username}} 的主页{% endblock %}
+{% block baner %}
+{% endblock %}
+
+{% block main %}
+{% load static %}
+    <div class="col-md-3">
+
+        <ul class="list-group">
+          <li class="list-group-item zz">
+            <a href="" class="tx">
+                <img src="/static/uepload/{{u.header}}" class="img-circle" width="121" height="121">
+            </a>
+          </li>
+          <li class="list-group-item"><p class="text-center user">{{u.username}}</p></li>
+          <li class="list-group-item">
+            <p class="text-center gz">
+                <a href="">
+                    <span class="glyphicon glyphicon-user"></span>
+                     关注
+                </a>
+            </p>
+          </li>
+            <li class="list-group-item"><p class="text-center user gz" style="font-size: 14px;font-weight: 600;">{{u.self_info}}</p></li>
+        </ul>
+    </div>
+
+    <div class="col-md-9">
+        <div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"> <h4><strong>
+
+          <span style="color: #ff1c1c;">{{u.username}}</span> 的所有文章
+      </strong>      </h4>
+
+  </div>
+
+  <ul class="list-group">
+      {% for a in articles %}
+    <li class="list-group-item" style="border: 1px solid #ccc;"><a href="/blog/article_content/{{a.id}}" style="color: #345;"><strong>{{a.title}}</strong></a> &nbsp; | &nbsp; {{a.publish_time}}</li>
+      {% empty %}
+      <li class="list-group-item" style="border: 1px solid #ccc;"><span style="color: #ff1c1c;">{{u.username}}</span>暂时没有发表文章！</li>
+      {% endfor %}
+
+  </ul>
+</div>
+
+</div>
+
+
+
+
+
+</div>
+{% endblock %}
+
+{% block music %}
+{% endblock %}

@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% block con_left %}
+
+{% for a_t in article_top %}
+<div class="media wz">
+
+  <div class="media-body">
+    <a href="/blog/article_content/{{a_t.id}}" class="media-heading wz-title"><strong>{{a_t.title | truncatechars:30 }}</strong></a>
+    <span class="label label-danger">置顶</span>
+    <p class="text-left text-muted" >
+        {{a.note|truncatechars:80}}
+    </p>
+  </div>
+    {% if a_t.image %}
+    <div class="media-right media-middle">
+        {% load static %}
+    <a href="/blog/article_content/{{a_t.id}}">
+      <!--<img class="media-object" src="{% static 'images/wz/1.jpg' %}" alt="...">-->
+      <img class="media-object" src="/static/uepload/{{a_t.image}}" alt="...">
+    </a>
+  </div>
+    {% else %}
+    {% endif %}
+    <div class="media-bottom">
+        <p class="text-muted text-left">
+        <a href="/blog/user/{{a_t.author_id}}"><span  id="author">{{a_t.author.username}}</span></a>
+        <span class="glyphicon glyphicon-eye-open" id="yd"></span> {{a_t.count}}
+        <a href="" id="pl-link"><span class="glyphicon glyphicon-comment" id="pl"></span> 99</a>
+        <span  id="time">{{a_t.publish_time}}</span>
+        </p>
+    </div>
+</div>
+
+
+    {% endfor %}
+
+
+
+<!--==================================================-->
+
+{% for a in articles %}
+<div class="media wz">
+
+  <div class="media-body">
+    <a href="/blog/article_content/{{a.id}}" class="media-heading wz-title"><strong>{{a.title | truncatechars:25 }}</strong></a>
+    <span class="label label-default">文章</span>
+    <p class="text-left text-muted" >
+        {{a.note|truncatechars:75}}
+    </p>
+  </div>
+    {% if a.image %}
+    <div class="media-right media-middle">
+        {% load static %}
+    <a href="/blog/article_content/{{a.id}}">
+      <!--<img class="media-object" src="{% static 'images/wz/1.jpg' %}" alt="...">-->
+      <img class="media-object" src="/static/uepload/{{a.image}}" alt="...">
+    </a>
+  </div>
+    {% else %}
+    {% endif %}
+    <div class="media-bottom">
+        <p class="text-muted text-left">
+        <a href="/blog/user/{{a.author_id}}"><span  id="author">{{a.author.username}}</span></a>
+        <span class="glyphicon glyphicon-eye-open" id="yd"></span> {{a.count}}
+        <a href="" id="pl-link"><span class="glyphicon glyphicon-comment" id="pl"></span> 99</a>
+        <span  id="time">{{a.publish_time}}</span>
+        {% if a.feilei == 3 %}
+            <a href="{% url 'blog:other' %}" id="time" style="color: #567;" title="所属栏目">其它专栏</a>
+        {% elif a.feilei == 2 %}
+            <a href="{% url 'blog:yuanchuang' %}" id="time" style="color: #567;" title="所属栏目">原创专栏</a>
+        {% elif a.feilei == 1 %}
+            <a href="{% url 'blog:banyun' %}" id="time" style="color: #567;" title="所属栏目">搬运专栏</a>
+        {% endif %}
+        </p>
+    </div>
+</div>
+
+
+    {% endfor %}
+<div class="row col-md-8 col-md-offset-3">
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+          <li>
+              <a href="/blog/index/?pageNow=1" aria-label="Previous" title="首页">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+
+          {% if pageNow > 1 %}
+          <li>
+              <a href="/blog/index/?pageNow={{pageNow|add:-1}}" title="上一页">
+                  上一页
+              </a>
+          </li>
+          {% endif %}
+
+          {% for page in pagerange %}
+              {% if page == pageNow %}
+                <li class="active">
+                    <a href="/blog/index/?pageNow={{page}}" title="当前页面">
+                        {{page}}
+                    </a>
+                </li>
+
+              {% elif page >= pageNow|add:'-2' and page <= pageNow|add:'2' %}
+                <li>
+                    <a href="/blog/index/?pageNow={{page}}" title="第{{page}}页">
+                        {{page}}
+                    </a>
+                </li>
+              {% endif %}
+          {% endfor %}
+          {% if pageNow < pageCount %}
+          <li>
+              <a href="/blog/index/?pageNow={{pageNow|add:1}}" title="下一页">
+                  下一页
+              </a>
+          </li>
+          {% endif %}
+          <li>
+              <a href="/blog/index/?pageNow={{pageCount}}" aria-label="Next" title="尾页">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+      </ul>
+    </nav>
+</div>
+{% endblock %}
+
+<!--========================================-->
+
+{% block hot_articles %}
+<ul class="list-group hot-wz">
+    <li class="list-group-item" id="hot-wz-title">
+        <h4><span class="glyphicon glyphicon-folder-open"></span> &nbsp;热门文章</h4>
+    </li>
+    {% for h_a in hot_articles %}
+    <li class="list-group-item"><a href="/blog/article_content/{{h_a.id}}">{{h_a.title | truncatechars:28 }}</a></li>
+
+    {% empty %}
+    <li class="list-group-item"><a href="">还没有热门文章！</a></li>
+    {% endfor %}
+
+</ul>
+{% endblock %}
+{% block hot_user %}
+
+<ul class="list-group hot-yh">
+			  <li class="list-group-item" id="hot-yh-title">
+			    <h4><i class="glyphicon glyphicon-education"></i> &nbsp;热门用户</h4>
+			  </li>
+            {% for user in users %}
+			  <li class="list-group-item">
+			  	<a href="/blog/user/{{user.id}}">
+			  		<img src="/static/uepload/{{user.header}}">
+			  		<span>{{user.username}}</span>
+			  	</a>
+			  </li>
+    {% empty %}
+    <h3>暂时没有用户</h3>
+    {% endfor %}
+			</ul>
+
+{% endblock %}
+
+{% block music %}
+{% endblock %}
